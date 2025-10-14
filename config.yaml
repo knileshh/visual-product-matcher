@@ -18,7 +18,7 @@ ml:
   clip_model: "ViT-B/32"  # CLIP model variant
   device: "cuda"  # "cpu" or "cuda" - will auto-fallback to CPU if CUDA unavailable
   embedding_dimension: 512
-  batch_size: 32
+  batch_size: 128  # Increased for better GPU utilization (RTX 3050 4GB can handle it)
 
 # Search Configuration
 search:
