@@ -226,15 +226,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('div');
         card.className = 'result-card';
         
-        // Get image path - handle both absolute and relative paths
-        let imagePath = product.image_path;
-        if (imagePath.includes('fashion-images')) {
-            const parts = imagePath.split('fashion-images');
-            imagePath = parts[parts.length - 1].replace(/\\/g, '/');
-            if (imagePath.startsWith('/')) {
-                imagePath = imagePath.substring(1);
-            }
-        }
+        // Construct image URL - image_path is already relative to server root
+        const imagePath = product.image_path.replace(/\\/g, '/');
         
         const similarityPercent = (product.similarity * 100).toFixed(1);
         
