@@ -45,19 +45,21 @@ def scan_images(images_directory: str, supported_formats: List[str]) -> List[str
     """
     logger.info(f"Scanning images in {images_directory}")
     
-    image_paths = []
+    image_paths = set()  # Use set to avoid duplicates
     images_path = Path(images_directory)
     
     if not images_path.exists():
         logger.error(f"Images directory not found: {images_directory}")
         return []
     
-    # Scan for images
+    # Scan for images (case-insensitive to avoid duplicates on Windows)
     for ext in supported_formats:
+        # Search for both lowercase and uppercase extensions
+        # but use a set to deduplicate (Windows filesystem is case-insensitive)
         for pattern in [f"*.{ext}", f"*.{ext.upper()}"]:
-            image_paths.extend(images_path.rglob(pattern))
+            image_paths.update(images_path.rglob(pattern))
     
-    image_paths = [str(p) for p in image_paths]
+    image_paths = sorted([str(p) for p in image_paths])  # Sort for consistency
     logger.info(f"Found {len(image_paths)} images")
     
     return image_paths
