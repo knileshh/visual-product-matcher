@@ -9,7 +9,7 @@ torchvision==0.16.0
 transformers==4.35.0
 pillow==10.1.0
 faiss-cpu==1.7.4
-clip-by-openai==1.0
+git+https://github.com/openai/CLIP.git
 
 # Data Processing
 numpy==1.26.2
