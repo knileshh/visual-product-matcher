@@ -19,24 +19,28 @@ This will show your GPU and driver version. Your RTX 3050 supports CUDA 11.x and
 ### 2. Uninstall CPU-Only PyTorch
 
 ```powershell
-pip uninstall torch torchvision torchaudio
+pip uninstall torch torchvision -y
 ```
 
-**Important**: Say "yes" to uninstall all three packages.
+**Important**: This will remove the CPU-only versions.
 
 ### 3. Install CUDA-Enabled PyTorch
 
+**Latest Stable Version: PyTorch 2.8.0 (October 2025)**
+
 Choose based on your CUDA preference:
 
-#### Option A: CUDA 11.8 (Recommended - More Stable)
+#### Option A: CUDA 12.6 (Recommended - Latest Stable)
 ```powershell
-pip install torch==2.1.0 torchvision==0.16.0 --index-url https://download.pytorch.org/whl/cu118
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 ```
 
-#### Option B: CUDA 12.1 (Latest)
+#### Option B: CUDA 11.8 (Legacy - For Older Drivers)
 ```powershell
-pip install torch==2.1.0 torchvision==0.16.0 --index-url https://download.pytorch.org/whl/cu121
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
 ```
+
+**Note**: RTX 3050 supports both CUDA 11.x and 12.x. CUDA 12.6 is recommended for latest features and performance.
 
 ### 4. Verify GPU is Detected
 
