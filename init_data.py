@@ -133,9 +133,12 @@ def populate_database(
     
     for image_path in tqdm(image_paths, desc="Processing products"):
         try:
+            # Normalize path: convert to forward slashes and make relative to images_directory
+            normalized_path = str(Path(image_path).as_posix())
+            
             # Skip if already exists
-            if db.product_exists(image_path):
-                existing_product = db.get_product_by_path(image_path)
+            if db.product_exists(normalized_path):
+                existing_product = db.get_product_by_path(normalized_path)
                 if existing_product:
                     product_mappings.append((existing_product.id, image_path))
                 continue
@@ -149,7 +152,7 @@ def populate_database(
             product = Product(
                 id=0,  # Will be auto-assigned
                 name=name,
-                image_path=image_path,
+                image_path=normalized_path,  # Store normalized path
                 category=category,
                 file_size=metadata.get('file_size'),
                 width=metadata.get('width'),
