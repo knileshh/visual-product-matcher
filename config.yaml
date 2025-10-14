@@ -54,5 +54,5 @@ performance:
 
 # Product Data Configuration
 products:
-  images_directory: "fashion-images"
+  images_directory: "."  # Serve from project root since DB paths include full relative path
   supported_formats: ["jpg", "jpeg", "png", "webp"]
