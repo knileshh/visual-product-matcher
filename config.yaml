@@ -56,3 +56,34 @@ performance:
 products:
   images_directory: "."  # Serve from project root since DB paths include full relative path
   supported_formats: ["jpg", "jpeg", "png", "webp"]
+
+# Security & Rate Limiting Configuration
+security:
+  # Rate limiting (requests per time window)
+  rate_limit:
+    enabled: true
+    default: "100 per hour"  # Global rate limit
+    upload: "10 per minute"  # File upload endpoint
+    search: "30 per minute"  # Search endpoints
+    storage_uri: "memory://"  # Use "redis://localhost:6379" for production
+  
+  # File upload safety
+  upload_safety:
+    max_file_size_mb: 10
+    scan_for_malware: false  # Set to true when antivirus integration available
+    allowed_mime_types: ["image/jpeg", "image/jpg", "image/png", "image/webp"]
+    strip_exif: true  # Remove EXIF data for privacy
+  
+  # Request validation
+  request_validation:
+    max_url_length: 2048
+    url_timeout_seconds: 10
+    allowed_url_schemes: ["http", "https"]
+    blocked_private_ips: true  # Prevent SSRF attacks
+  
+  # Response headers
+  headers:
+    x_frame_options: "DENY"
+    x_content_type_options: "nosniff"
+    x_xss_protection: "1; mode=block"
+    strict_transport_security: "max-age=31536000; includeSubDomains"

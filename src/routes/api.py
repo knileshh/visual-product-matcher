@@ -3,9 +3,10 @@ API routes for Visual Product Matcher.
 """
 import os
 import logging
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from werkzeug.utils import secure_filename
 import tempfile
+from src.middleware import validate_url_safety, validate_file_upload
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +71,22 @@ def init_api(
             - file: Image file (multipart/form-data)
             - k: Optional number of results (default from config)
             - threshold: Optional similarity threshold (0-1)
+        
+        Rate limited to prevent abuse.
         """
+        # Get rate limiter and apply upload-specific limit
+        limiter = current_app.config.get('LIMITER')
+        if limiter:
+            upload_limit = config.get('security', {}).get('rate_limit', {}).get('upload', '10 per minute')
+            try:
+                limiter.limit(upload_limit)(lambda: None)()
+            except Exception as e:
+                logger.warning(f"Rate limit exceeded for upload: {e}")
+                return jsonify({
+                    'error': 'Rate limit exceeded',
+                    'message': 'Too many upload requests. Please try again later.'
+                }), 429
+        
         try:
             # Check if file is present
             if 'file' not in request.files:
@@ -85,6 +101,15 @@ def init_api(
                 return jsonify({
                     'error': 'Empty filename',
                     'message': 'Please select a file'
+                }), 400
+            
+            # Validate file security
+            is_valid, error_message = validate_file_upload(file, config)
+            if not is_valid:
+                logger.warning(f"File validation failed: {error_message}")
+                return jsonify({
+                    'error': 'Invalid file',
+                    'message': error_message
                 }), 400
             
             # Get optional parameters
@@ -178,7 +203,22 @@ def init_api(
             - url: Image URL
             - k: Optional number of results
             - threshold: Optional similarity threshold
+        
+        Rate limited and validates URLs for security.
         """
+        # Apply search rate limit
+        limiter = current_app.config.get('LIMITER')
+        if limiter:
+            search_limit = config.get('security', {}).get('rate_limit', {}).get('search', '30 per minute')
+            try:
+                limiter.limit(search_limit)(lambda: None)()
+            except Exception as e:
+                logger.warning(f"Rate limit exceeded for search: {e}")
+                return jsonify({
+                    'error': 'Rate limit exceeded',
+                    'message': 'Too many search requests. Please try again later.'
+                }), 429
+        
         try:
             data = request.get_json()
             
@@ -189,6 +229,16 @@ def init_api(
                 }), 400
             
             url = data['url']
+            
+            # Validate URL security (prevent SSRF)
+            is_valid, error_message = validate_url_safety(url, config)
+            if not is_valid:
+                logger.warning(f"URL validation failed: {error_message} - URL: {url}")
+                return jsonify({
+                    'error': 'Invalid URL',
+                    'message': error_message
+                }), 400
+            
             k = data.get('k', config['search']['default_k'])
             threshold = data.get('threshold', config['search']['default_similarity_threshold'])
             

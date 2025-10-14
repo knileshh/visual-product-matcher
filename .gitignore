@@ -1,6 +1,7 @@
-# Ignore all markdown files except README.md
+# Ignore all markdown files except README.md and SECURITY.md
 *.md
 !README.md
+!SECURITY.md
 
 # Standard Python ignores
 __pycache__/
@@ -48,6 +49,12 @@ Thumbs.db
 logs/
 data/uploads/*
 data/temp/*
+data/products.db
+data/embeddings/
+data/index/
+
+# Fashion images dataset (not committed to repo)
+fashion-images/
 !data/products/
 .env
 .env.local

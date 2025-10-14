@@ -18,6 +18,7 @@ from src.services.embedding_service import EmbeddingService
 from src.services.search_service import SearchService
 from src.routes.api import init_api
 from src.routes.ui import init_ui
+from src.middleware import init_rate_limiter, init_security_middleware
 
 
 def load_config(config_path: str = "config.yaml") -> dict:
@@ -67,6 +68,13 @@ def create_app(config_path: str = "config.yaml") -> Flask:
     
     # Enable CORS
     CORS(app)
+    
+    # Initialize security middleware
+    init_security_middleware(app, config)
+    limiter = init_rate_limiter(app, config)
+    
+    # Store limiter in app config for use in routes
+    app.config['LIMITER'] = limiter
     
     logger.info("Initializing Visual Product Matcher")
     

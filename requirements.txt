@@ -2,6 +2,7 @@
 Flask==3.0.0
 Werkzeug==3.0.1
 Flask-CORS==4.0.0
+Flask-Limiter==3.5.0
 
 # ML/AI Libraries
 # torch and torchvision - Install separately with CUDA support:
