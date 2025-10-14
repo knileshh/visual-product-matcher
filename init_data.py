@@ -130,11 +130,20 @@ def populate_database(
     logger.info("Populating database with product metadata")
     
     product_mappings = []
+    images_dir_name = Path(images_directory).name  # Get 'fashion-images'
     
     for image_path in tqdm(image_paths, desc="Processing products"):
         try:
-            # Normalize path: convert to forward slashes and make relative to images_directory
+            # Normalize path: convert to forward slashes
             normalized_path = str(Path(image_path).as_posix())
+            
+            # Ensure we don't have duplicate directory names in path
+            # If path is "fashion-images/fashion-images/10000.jpg", fix it to "fashion-images/10000.jpg"
+            if normalized_path.count(images_dir_name) > 1:
+                # Find the last occurrence and keep from there
+                parts = normalized_path.split(images_dir_name)
+                # Reconstruct with only one instance of the directory name
+                normalized_path = images_dir_name + parts[-1]
             
             # Skip if already exists
             if db.product_exists(normalized_path):
