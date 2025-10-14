@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <section class="upload-section">
+        <h2>Upload an Image to Find Similar Products</h2>
+        
+        <div class="upload-methods">
+            <!-- File Upload Tab -->
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="file-upload">Upload File</button>
+                <button class="tab-btn" data-tab="url-upload">Use URL</button>
+            </div>
+
+            <!-- File Upload Form -->
+            <div id="file-upload" class="tab-content active">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="file-input" name="file" accept="image/jpeg,image/png,image/webp" required>
+                        <label for="file-input" class="file-label">
+                            <span class="file-icon">📁</span>
+                            <span class="file-text">Choose an image or drag it here</span>
+                        </label>
+                    </div>
+                    
+                    <div class="preview-container" id="preview-container" style="display: none;">
+                        <img id="preview-image" src="" alt="Preview">
+                    </div>
+
+                    <div class="search-options">
+                        <div class="option-group">
+                            <label for="result-count">Number of results:</label>
+                            <input type="number" id="result-count" name="k" min="1" max="50" value="20">
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="similarity-threshold">Similarity threshold:</label>
+                            <input type="range" id="similarity-threshold" name="threshold" min="0" max="1" step="0.05" value="0.3">
+                            <span id="threshold-value">0.30</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Find Similar Products</span>
+                        <span class="btn-loader" style="display: none;">Searching...</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- URL Upload Form -->
+            <div id="url-upload" class="tab-content">
+                <form id="url-form">
+                    <div class="input-group">
+                        <input type="url" id="url-input" name="url" placeholder="https://example.com/image.jpg" required>
+                    </div>
+
+                    <div class="search-options">
+                        <div class="option-group">
+                            <label for="url-result-count">Number of results:</label>
+                            <input type="number" id="url-result-count" name="k" min="1" max="50" value="20">
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="url-similarity-threshold">Similarity threshold:</label>
+                            <input type="range" id="url-similarity-threshold" name="threshold" min="0" max="1" step="0.05" value="0.3">
+                            <span id="url-threshold-value">0.30</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Find Similar Products</span>
+                        <span class="btn-loader" style="display: none;">Searching...</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Error Messages -->
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results-section" style="display: none;">
+        <h2>Search Results</h2>
+        
+        <div class="query-image-container">
+            <h3>Your Search Image</h3>
+            <img id="query-image" src="" alt="Query image">
+        </div>
+
+        <div class="results-info">
+            <p>Found <strong id="results-count">0</strong> similar products</p>
+        </div>
+
+        <div class="results-grid" id="results-grid">
+            <!-- Results will be populated here by JavaScript -->
+        </div>
+    </section>
+</div>
+{% endblock %}
