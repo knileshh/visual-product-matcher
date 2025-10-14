@@ -23,6 +23,7 @@ SQLAlchemy==2.0.23
 
 # Utilities
 requests==2.31.0
+tqdm==4.66.1
 
 # Production Server
 gunicorn==21.2.0
