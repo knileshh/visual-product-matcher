@@ -1,0 +1,58 @@
+# Application Configuration
+app:
+  name: "Visual Product Matcher"
+  debug: false
+  host: "0.0.0.0"
+  port: 5000
+  secret_key: "change-this-in-production-use-env-var"
+
+# Upload Configuration
+upload:
+  max_file_size_mb: 10
+  allowed_extensions: ["jpg", "jpeg", "png", "webp"]
+  upload_folder: "data/uploads"
+  temp_folder: "data/temp"
+
+# ML/AI Configuration
+ml:
+  clip_model: "ViT-B/32"  # CLIP model variant
+  device: "cuda"  # "cpu" or "cuda" - will auto-fallback to CPU if CUDA unavailable
+  embedding_dimension: 512
+  batch_size: 32
+
+# Search Configuration
+search:
+  default_k: 20  # Number of results to return
+  min_similarity_threshold: 0.0
+  max_similarity_threshold: 1.0
+  default_similarity_threshold: 0.3
+
+# Database Configuration
+database:
+  type: "sqlite"
+  path: "data/products.db"
+  echo: false
+
+# Index Configuration
+index:
+  faiss_index_path: "data/index/products.index"
+  embeddings_cache_path: "data/embeddings/products.npy"
+  metadata_cache_path: "data/embeddings/metadata.json"
+  rebuild_on_startup: false
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  log_file: "logs/app.log"
+
+# Performance Configuration
+performance:
+  cache_enabled: true
+  cache_size_mb: 100
+  preload_embeddings_on_startup: true
+
+# Product Data Configuration
+products:
+  images_directory: "fashion-images"
+  supported_formats: ["jpg", "jpeg", "png", "webp"]
