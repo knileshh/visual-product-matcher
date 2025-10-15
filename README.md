@@ -1,5 +1,8 @@
 # Visual Product Matcher
 
+[Live Deployment](https://visualmatch.knileshh.com) 
+[Frontend Repository](https://github.com/knileshh/visual-product-matcher-fe.git)
+
 > 🎯 **Production-ready** AI-powered visual search engine with **42,700+ fashion products**. Find visually similar items using CLIP embeddings and FAISS similarity search.
 
 **Created by [Nilesh Kumar](https://knileshh.com)** | [hey@knileshh.com](mailto:hey@knileshh.com)
@@ -20,6 +23,7 @@
 - 🌐 **Cloud-Ready** - Cloudinary CDN integration for scalable storage
 - 🔒 **Enterprise Security** - Rate limiting, validation, auto-cleanup
 - 📊 **Real-Time Search** - Upload image or URL, get instant similar products
+ - 🌍 **Live Demo** - Check the live deployment at https://visualmatch.knileshh.com
 
 ## � Project Scale
 
@@ -39,6 +43,7 @@
 - **Visual Search**: Upload an image or provide a URL to find visually similar products
 - **AI-Powered**: Uses OpenAI's CLIP model for semantic image understanding
 - **Fast Search**: FAISS indexing enables efficient similarity search across 42K+ products
+ - **Try it Live**: Visit the live demo: https://visualmatch.knileshh.com
 - **Adjustable Threshold**: Fine-tune similarity matching with adjustable threshold slider
 - **Responsive UI**: Mobile-friendly interface that works on all devices
 - **RESTful API**: Well-documented API endpoints for integration
@@ -357,13 +362,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Email: [hey@knileshh.com](mailto:hey@knileshh.com)
 - GitHub: [@knileshh](https://github.com/knileshh)
 
-## 📞 Support
-
-For questions or issues:
-- 📧 Email: hey@knileshh.com
-- 🐛 Open an issue on GitHub
-- 📖 Check the [docs/](docs/) folder for detailed documentation
-
 ---
 
 **Built with ❤️ by Nilesh Kumar** • **Production Ready** 🚀
@@ -384,76 +382,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [Flask](https://flask.palletsprojects.com/) - Web framework
 - [Cloudinary](https://cloudinary.com/) - Image hosting platform
 
-## 📞 Support
-
-For questions or issues:
-- 📧 Email: hey@knileshh.com
-- 🐛 Open an issue on GitHub
-- 📖 Check the [docs/](docs/) folder for detailed documentation
-
 ---
 
 **Built with ❤️ by Nilesh Kumar** • **Production Ready** 🚀
-
-│   ├── index/              # FAISS index
-│   └── embeddings/         # Cached embeddings
-├── fashion-images/          # Product images
-└── docs/                    # Documentation
-```
-
-## 🎯 Configuration
-
-Edit `config.yaml` to customize:
-- ML model settings (CLIP variant, device)
-- Search parameters (k, threshold)
-- Upload limits and file formats
-- Database and index paths
-
-## 📖 Documentation
-
-- [Architecture](docs/ARCHITECTURE.md) - System design and components
-- [API Reference](docs/API.md) - API endpoints and examples
-- [Setup Guide](docs/SETUP.md) - Detailed installation instructions
-- [Approach](docs/APPROACH.md) - Technical approach and decisions
-
-## 🔬 Technology Stack
-
-- **Backend**: Python, Flask, Gunicorn
-- **ML/AI**: PyTorch, CLIP, FAISS
-- **Database**: SQLite
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Testing**: pytest
-- **Deployment**: [Platform TBD - Render/Railway/etc.]
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-Copyright (c) 2025 Nilesh Kumar
-
-## 🙏 Acknowledgments
-
-- OpenAI for CLIP model
-- Meta for FAISS library
-- Fashion image dataset contributors
-
-## 👨‍� Author
-
-**Nilesh Kumar**
-- Website: [knileshh.com](https://knileshh.com)
-- Email: [hey@knileshh.com](mailto:hey@knileshh.com)
-- GitHub: [@knileshh](https://github.com/knileshh)
-
-## �📞 Contact
-
-For questions or support:
-- Open an issue on GitHub
-- Email: hey@knileshh.com
-
----
-
-**Built with ❤️ by Nilesh Kumar using CLIP and FAISS**
