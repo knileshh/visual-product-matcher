@@ -152,17 +152,13 @@ def create_app(config_path: str = "config.yaml") -> Flask:
     app.config['SECRET_KEY'] = config['app']['secret_key']
     app.config['MAX_CONTENT_LENGTH'] = config['upload']['max_file_size_mb'] * 1024 * 1024
     
-    # Enable CORS for frontend
+    # Enable CORS - Allow all origins since we're serving both frontend and API
     CORS(app, resources={
-        r"/api/*": {
-            "origins": [
-                "http://localhost:3000",
-                "http://localhost:5173",
-                "https://vsearch.knileshh.com"
-            ],
+        r"/*": {
+            "origins": "*",
             "methods": ["GET", "POST", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"],
-            "supports_credentials": True
+            "supports_credentials": False
         }
     })
     
