@@ -1,0 +1,56 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Local development
+.env
+.env.local
+*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Application data (exclude from container)
+fashion-images/
+uploads/*.jpg
+uploads/*.png
+uploads/*.jpeg
+
+# Don't include local database in container
+# data/products.db
+
+# Logs
+*.log
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+.tox/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Documentation build
+docs/_build/
+
+# Temporary files
+*.tmp
+temp/

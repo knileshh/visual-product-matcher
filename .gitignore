@@ -3,6 +3,11 @@
 !README.md
 !SECURITY.md
 
+# Exclude documentation and planning files
+docs/
+scripts/test_*.py
+scripts/quick_*.py
+
 # Standard Python ignores
 __pycache__/
 *.py[cod]

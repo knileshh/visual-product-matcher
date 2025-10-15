@@ -251,3 +251,65 @@ class ImageService:
             logger.info("Cleaned up temporary files")
         except Exception as e:
             logger.error(f"Error cleaning up temp files: {str(e)}")
+    
+    def cleanup_old_uploads(self, max_age_minutes: int = 60) -> int:
+        """
+        Remove uploaded files older than specified age.
+        
+        Args:
+            max_age_minutes: Maximum age of files in minutes (default: 60)
+            
+        Returns:
+            Number of files deleted
+        """
+        import time
+        deleted_count = 0
+        
+        try:
+            upload_path = Path(self.upload_folder)
+            current_time = time.time()
+            max_age_seconds = max_age_minutes * 60
+            
+            for file in upload_path.glob('*'):
+                if file.is_file():
+                    # Check file age
+                    file_age = current_time - file.stat().st_mtime
+                    
+                    if file_age > max_age_seconds:
+                        file.unlink()
+                        deleted_count += 1
+                        logger.debug(f"Deleted old upload: {file.name} (age: {file_age/60:.1f} minutes)")
+            
+            if deleted_count > 0:
+                logger.info(f"Cleaned up {deleted_count} old uploaded files (older than {max_age_minutes} minutes)")
+            
+            return deleted_count
+            
+        except Exception as e:
+            logger.error(f"Error cleaning up old uploads: {str(e)}")
+            return deleted_count
+    
+    def get_upload_folder_size(self) -> dict:
+        """
+        Get size and file count of upload folder.
+        
+        Returns:
+            Dictionary with total_size_mb and file_count
+        """
+        try:
+            upload_path = Path(self.upload_folder)
+            total_size = 0
+            file_count = 0
+            
+            for file in upload_path.glob('*'):
+                if file.is_file():
+                    total_size += file.stat().st_size
+                    file_count += 1
+            
+            return {
+                'total_size_mb': round(total_size / (1024 * 1024), 2),
+                'file_count': file_count
+            }
+        except Exception as e:
+            logger.error(f"Error getting upload folder size: {str(e)}")
+            return {'total_size_mb': 0, 'file_count': 0}

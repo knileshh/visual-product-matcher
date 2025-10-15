@@ -8,6 +8,9 @@ from pathlib import Path
 import yaml
 from flask import Flask
 from flask_cors import CORS
+from threading import Thread
+import time
+import atexit
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -42,6 +45,81 @@ def setup_logging(config: dict) -> None:
             logging.StreamHandler()
         ]
     )
+
+
+# Global variables for cleanup scheduler
+cleanup_thread = None
+cleanup_running = False
+
+
+def cleanup_scheduler(image_service: ImageService, interval_minutes: int = 30, max_age_minutes: int = 60):
+    """
+    Background thread to periodically clean up old uploaded files.
+    
+    Args:
+        image_service: ImageService instance
+        interval_minutes: How often to run cleanup (default: 30 minutes)
+        max_age_minutes: Age threshold for file deletion (default: 60 minutes)
+    """
+    global cleanup_running
+    logger = logging.getLogger(__name__)
+    
+    logger.info(f"Upload cleanup scheduler started (interval: {interval_minutes}min, max_age: {max_age_minutes}min)")
+    
+    while cleanup_running:
+        try:
+            # Wait for the interval
+            time.sleep(interval_minutes * 60)
+            
+            if not cleanup_running:
+                break
+            
+            # Perform cleanup
+            deleted_count = image_service.cleanup_old_uploads(max_age_minutes)
+            
+            # Also clean temp files
+            image_service.cleanup_temp_files()
+            
+            # Log folder stats
+            stats = image_service.get_upload_folder_size()
+            logger.info(f"Upload folder: {stats['file_count']} files, {stats['total_size_mb']} MB")
+            
+        except Exception as e:
+            logger.error(f"Error in cleanup scheduler: {str(e)}")
+
+
+def start_cleanup_scheduler(image_service: ImageService, config: dict):
+    """Start the background cleanup scheduler."""
+    global cleanup_thread, cleanup_running
+    
+    cleanup_config = config.get('upload', {}).get('cleanup', {})
+    enabled = cleanup_config.get('enabled', True)
+    
+    if not enabled:
+        logging.getLogger(__name__).info("Upload cleanup scheduler is disabled")
+        return
+    
+    interval = cleanup_config.get('interval_minutes', 30)
+    max_age = cleanup_config.get('max_age_minutes', 60)
+    
+    cleanup_running = True
+    cleanup_thread = Thread(
+        target=cleanup_scheduler,
+        args=(image_service, interval, max_age),
+        daemon=True
+    )
+    cleanup_thread.start()
+
+
+def stop_cleanup_scheduler():
+    """Stop the background cleanup scheduler."""
+    global cleanup_running, cleanup_thread
+    
+    if cleanup_thread and cleanup_running:
+        logging.getLogger(__name__).info("Stopping cleanup scheduler...")
+        cleanup_running = False
+        if cleanup_thread.is_alive():
+            cleanup_thread.join(timeout=5)
 
 
 def create_app(config_path: str = "config.yaml") -> Flask:
@@ -122,6 +200,12 @@ def create_app(config_path: str = "config.yaml") -> Flask:
         device_info = embedding_service.get_device_info()
         logger.info(f"Using device: {device_info['device']}")
         logger.info(f"Model: {device_info['model']}")
+        
+        # Start cleanup scheduler for uploaded files
+        start_cleanup_scheduler(image_service, config)
+        
+        # Register cleanup on exit
+        atexit.register(stop_cleanup_scheduler)
         
     except Exception as e:
         logger.error(f"Error initializing application: {str(e)}", exc_info=True)

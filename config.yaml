@@ -12,6 +12,11 @@ upload:
   allowed_extensions: ["jpg", "jpeg", "png", "webp"]
   upload_folder: "data/uploads"
   temp_folder: "data/temp"
+  # Automatic cleanup settings for uploaded files
+  cleanup:
+    enabled: true
+    interval_minutes: 30  # How often to run cleanup
+    max_age_minutes: 60   # Delete files older than this
 
 # ML/AI Configuration
 ml:
