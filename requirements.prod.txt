@@ -1,0 +1,37 @@
+# Core Web Framework
+Flask==3.0.0
+Werkzeug==3.0.1
+Flask-CORS==4.0.0
+Flask-Limiter==3.5.0
+
+# ML/AI Libraries (CPU-only versions for smaller size)
+torch==2.1.0
+torchvision==0.16.0
+ftfy==6.1.1
+regex==2023.10.3
+git+https://github.com/openai/CLIP.git
+
+# Use CPU-only FAISS (much smaller than GPU version)
+faiss-cpu==1.7.4
+
+# Image Processing
+pillow==10.1.0
+
+# Data Processing (only numpy, exclude pandas if not strictly needed)
+numpy==1.26.2
+
+# Configuration
+PyYAML==6.0.1
+python-dotenv==1.0.0
+
+# Database
+SQLAlchemy==2.0.23
+
+# Utilities (minimal)
+requests==2.31.0
+tqdm==4.66.1
+
+# Production Server
+gunicorn==21.2.0
+
+# Note: Development dependencies (pytest, black, flake8, mypy) are excluded from production

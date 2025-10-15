@@ -3,11 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+.Python
 
 # Virtual environment
 venv/
 env/
 ENV/
+.venv/
 
 # Local development
 .env
@@ -25,32 +27,85 @@ ENV/
 .DS_Store
 Thumbs.db
 
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation and planning (IMPORTANT: exclude these)
+docs/
+*.md
+!README.md
+AUTHOR_CREDITS.md
+
+# Scripts (exclude test and utility scripts)
+scripts/
+tests/
+test/
+
 # Application data (exclude from container)
 fashion-images/
 uploads/*.jpg
 uploads/*.png
 uploads/*.jpeg
-
-# Don't include local database in container
-# data/products.db
+data/uploads/
+data/temp/
 
 # Logs
 *.log
+logs/
 
 # Testing
 .pytest_cache/
 htmlcov/
 .coverage
 .tox/
+pytest.ini
+.coveragerc
 
 # Build artifacts
 dist/
 build/
 *.egg-info/
+setup.py
+project.json
 
-# Documentation build
-docs/_build/
+# Development tools
+Makefile
+.flake8
+.mypy_cache/
+.black
+mypy.ini
+
+# Deployment configs (copy only what's needed)
+deployment/*.ps1
+deployment/*.sh
+deployment/Procfile
+deployment/render.yaml
+deployment/runtime.txt
+deployment/.dockerignore
+deployment/Dockerfile
+deployment/README.md
+
+# Docker
+Dockerfile.dev
+docker-compose*.yml
+.dockerignore
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
 
 # Temporary files
 *.tmp
 temp/
+tmp/
+
+# Large files that aren't needed
+*.mp4
+*.avi
+*.mov
+*.zip
+*.tar.gz
+*.rar
