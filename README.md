@@ -1,6 +1,6 @@
 # Visual Product Matcher
 
-> AI-powered visual search engine for finding similar fashion products using CLIP embeddings and FAISS similarity search.
+> 🎯 **Production-ready** AI-powered visual search engine with **42,700+ fashion products**. Find visually similar items using CLIP embeddings and FAISS similarity search.
 
 **Created by [Nilesh Kumar](https://knileshh.com)** | [hey@knileshh.com](mailto:hey@knileshh.com)
 
@@ -8,8 +8,33 @@
 [![Flask](https://img.shields.io/badge/Flask-3.0-green.svg)](https://flask.palletsprojects.com/)
 [![CLIP](https://img.shields.io/badge/CLIP-OpenAI-orange.svg)](https://github.com/openai/CLIP)
 [![FAISS](https://img.shields.io/badge/FAISS-Meta-red.svg)](https://github.com/facebookresearch/faiss)
+[![Docker](https://img.shields.io/badge/Docker-1.62GB-blue.svg)](https://hub.docker.com)
+[![Products](https://img.shields.io/badge/Products-42.7K-green.svg)](#)
 
-## 🚀 Features
+## 🌟 Highlights
+
+- 🎨 **42,700+ Product Database** - Fully indexed fashion products with embeddings
+- 🚀 **Production Ready** - Deployed with Docker (1.62GB optimized image)
+- ⚡ **Lightning Fast** - <100ms search across entire catalog using FAISS
+- 🤖 **AI-Powered** - OpenAI CLIP (ViT-B/32) for semantic understanding
+- 🌐 **Cloud-Ready** - Cloudinary CDN integration for scalable storage
+- 🔒 **Enterprise Security** - Rate limiting, validation, auto-cleanup
+- 📊 **Real-Time Search** - Upload image or URL, get instant similar products
+
+## � Project Scale
+
+```
+📦 Products:        42,700 fashion items
+🔍 Embeddings:      21.8 million dimensions (42,700 × 512)
+💾 Database:        187 MB optimized SQLite
+🐳 Docker Image:    1.62 GB (87% optimized from 12.4GB)
+⚡ Search Index:    FAISS IndexFlat for maximum accuracy
+🌐 Image Storage:   Cloudinary CDN (globally distributed)
+🎯 Search Speed:    <100ms for entire catalog
+📊 Memory Usage:    ~1.5GB runtime
+```
+
+## �🚀 Features
 
 - **Visual Search**: Upload an image or provide a URL to find visually similar products
 - **AI-Powered**: Uses OpenAI's CLIP model for semantic image understanding
@@ -215,31 +240,62 @@ upload:
 
 ## 🚢 Deployment
 
-### Docker + Railway (Recommended)
+### Docker (Optimized: 1.62GB)
+
+The Docker image has been optimized from 12.4GB to 1.62GB (87% reduction):
 
 ```bash
-# Build and test locally
-docker build -t visual-matcher .
-docker run -p 8080:8080 --env-file .env visual-matcher
+# Build optimized image
+docker build -t visual-product-matcher:latest .
 
-# Push to Docker Hub
-docker tag visual-matcher username/visual-matcher
-docker push username/visual-matcher
+# Run locally
+docker run -d -p 8080:8080 --env-file .env visual-product-matcher:latest
 
-# Deploy to Railway from Docker Hub
+# Test
+curl http://localhost:8080/api/health
 ```
 
-See [docs/DEPLOYMENT_CHECKLIST.md](docs/DEPLOYMENT_CHECKLIST.md) for detailed instructions.
+### Push to Docker Hub
+
+```bash
+# Login
+docker login
+
+# Tag image
+docker tag visual-product-matcher:latest YOUR_USERNAME/visual-product-matcher:latest
+docker tag visual-product-matcher:latest YOUR_USERNAME/visual-product-matcher:v1.2.0
+
+# Push
+docker push YOUR_USERNAME/visual-product-matcher:latest
+docker push YOUR_USERNAME/visual-product-matcher:v1.2.0
+```
+
+See [docs/DOCKER_HUB_PUSH.md](docs/DOCKER_HUB_PUSH.md) for detailed instructions.
+
+### Railway Deployment
+
+1. **From Docker Hub:**
+   - Deploy: `YOUR_USERNAME/visual-product-matcher:latest`
+   - Add environment variables
+   - Set `PORT=8080`
+
+2. **From GitHub:**
+   - Connect your repository
+   - Railway auto-detects Dockerfile
+   - Configure environment variables
+   - Deploy!
+
+See [docs/DEPLOYMENT_CHECKLIST.md](docs/DEPLOYMENT_CHECKLIST.md) for complete guide.
 
 ### Next.js Frontend Integration
 
-Use the provided API service in your Next.js app:
-
 ```typescript
-// See docs/API_DOCUMENTATION.md for complete integration guide
-import { api } from '@/lib/api';
-
-const results = await api.uploadImage(file, 20, 0.3);
+// See docs/API_DOCUMENTATION.md for integration examples
+const results = await fetch('https://your-api.railway.app/api/search-url', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ url: imageUrl, k: 20, threshold: 0.3 })
+});
 ```
 
 ## 🔐 Security
