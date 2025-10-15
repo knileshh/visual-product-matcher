@@ -47,6 +47,8 @@ def init_api(
             
             return jsonify({
                 'status': 'healthy' if (db_status and index_status) else 'degraded',
+                'version': '1.2.0',
+                'author': 'Nilesh Kumar',
                 'database': {
                     'status': 'ok' if db_status else 'error',
                     'product_count': db.get_product_count()

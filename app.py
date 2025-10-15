@@ -1,5 +1,13 @@
 """
 Visual Product Matcher - Flask Application Entry Point
+
+Author: Nilesh Kumar
+Email: hey@knileshh.com
+Website: https://knileshh.com
+GitHub: @knileshh
+
+AI-powered visual search engine for finding similar fashion products
+using CLIP embeddings and FAISS similarity search.
 """
 import os
 import sys

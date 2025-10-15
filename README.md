@@ -2,6 +2,8 @@
 
 > AI-powered visual search engine for finding similar fashion products using CLIP embeddings and FAISS similarity search.
 
+**Created by [Nilesh Kumar](https://knileshh.com)** | [hey@knileshh.com](mailto:hey@knileshh.com)
+
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Flask](https://img.shields.io/badge/Flask-3.0-green.svg)](https://flask.palletsprojects.com/)
 [![CLIP](https://img.shields.io/badge/CLIP-OpenAI-orange.svg)](https://github.com/openai/CLIP)
@@ -318,7 +320,9 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2025 Nilesh Kumar
 
 ## 🙏 Acknowledgments
 
@@ -326,10 +330,19 @@ This project is licensed under the MIT License.
 - Meta for FAISS library
 - Fashion image dataset contributors
 
-## 📞 Contact
+## 👨‍� Author
 
-For questions or support, please open an issue on GitHub.
+**Nilesh Kumar**
+- Website: [knileshh.com](https://knileshh.com)
+- Email: [hey@knileshh.com](mailto:hey@knileshh.com)
+- GitHub: [@knileshh](https://github.com/knileshh)
+
+## �📞 Contact
+
+For questions or support:
+- Open an issue on GitHub
+- Email: hey@knileshh.com
 
 ---
 
-**Built with ❤️ using CLIP and FAISS**
+**Built with ❤️ by Nilesh Kumar using CLIP and FAISS**

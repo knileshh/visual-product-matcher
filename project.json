@@ -1,0 +1,23 @@
+{
+  "project": {
+    "name": "Visual Product Matcher",
+    "version": "1.2.0",
+    "description": "AI-powered visual product search and matching system using CLIP embeddings",
+    "repository": "https://github.com/knileshh/visual-product-matcher"
+  },
+  "creator": {
+    "name": "Nilesh Kumar",
+    "email": "hey@knileshh.com",
+    "github": "knileshh",
+    "website": "https://knileshh.com"
+  },
+  "license": {
+    "type": "MIT",
+    "year": 2025
+  },
+  "credits": {
+    "author": "Nilesh Kumar",
+    "contact": "hey@knileshh.com",
+    "copyright": "Copyright (c) 2025 Nilesh Kumar"
+  }
+}
