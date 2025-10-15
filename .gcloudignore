@@ -1,0 +1,68 @@
+# Ignore these files when deploying to Cloud Run
+# This makes builds faster and images smaller
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Local development
+.env.local
+*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation (not needed in production)
+*.md
+docs/
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+.tox/
+tests/
+
+# Local images (we use Cloudinary!)
+fashion-images/
+
+# Upload directory (temporary files)
+uploads/*.jpg
+uploads/*.png
+uploads/*.jpeg
+# Keep the directory structure
+!uploads/.gitkeep
+
+# Deployment scripts (not needed in container)
+deploy-*.ps1
+deploy-*.sh
+
+# Docker files (Cloud Build uses them but doesn't need to copy into image)
+.dockerignore
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+temp/
