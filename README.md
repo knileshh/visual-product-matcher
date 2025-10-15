@@ -310,10 +310,64 @@ See [SECURITY.md](SECURITY.md) for security policy and reporting.
 
 ## 📊 Performance
 
+- **Docker Image**: 1.62GB (optimized, 87% smaller than original 12.4GB)
 - **Search Speed**: <100ms for 42K products (with FAISS)
 - **Embedding Generation**: ~50ms per image (GPU) / ~200ms (CPU)
-- **Memory Usage**: ~2GB (with model loaded)
-- **Database Size**: 187MB (products + embeddings + index)
+- **Memory Usage**: ~1.5GB runtime (with model loaded)
+- **Database**: 187MB (SQLite with products + metadata)
+- **Startup Time**: ~30 seconds (includes model loading)
+
+## 🔬 Technology Stack
+
+- **Backend**: Python 3.10, Flask 3.0, Gunicorn
+- **ML/AI**: PyTorch (CPU-optimized), OpenAI CLIP (ViT-B/32), FAISS
+- **Database**: SQLite with SQLAlchemy
+- **Cloud Storage**: Cloudinary CDN
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Container**: Docker (multi-stage, optimized build)
+- **Deployment**: Railway-ready, Cloud Run compatible
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+**Copyright (c) 2025 Nilesh Kumar**
+
+## 🙏 Acknowledgments
+
+- [OpenAI CLIP](https://github.com/openai/CLIP) - Vision and language model
+- [Meta FAISS](https://github.com/facebookresearch/faiss) - Similarity search library
+- [Flask](https://flask.palletsprojects.com/) - Web framework
+- [Cloudinary](https://cloudinary.com/) - Image hosting and CDN
+
+## 👨‍💻 Author
+
+**Nilesh Kumar**
+- Website: [knileshh.com](https://knileshh.com)
+- Email: [hey@knileshh.com](mailto:hey@knileshh.com)
+- GitHub: [@knileshh](https://github.com/knileshh)
+
+## 📞 Support
+
+For questions or issues:
+- 📧 Email: hey@knileshh.com
+- 🐛 Open an issue on GitHub
+- 📖 Check the [docs/](docs/) folder for detailed documentation
+
+---
+
+**Built with ❤️ by Nilesh Kumar** • **Production Ready** 🚀
+
 
 ## 🤝 Contributing
 
@@ -332,14 +386,15 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Support
 
-For issues or questions:
-- Check the [documentation](docs/)
-- Review [API documentation](docs/API_DOCUMENTATION.md)
-- Open an issue on GitHub
+For questions or issues:
+- 📧 Email: hey@knileshh.com
+- 🐛 Open an issue on GitHub
+- 📖 Check the [docs/](docs/) folder for detailed documentation
 
 ---
 
-**Ready for production deployment!** 🚀
+**Built with ❤️ by Nilesh Kumar** • **Production Ready** 🚀
+
 │   ├── index/              # FAISS index
 │   └── embeddings/         # Cached embeddings
 ├── fashion-images/          # Product images
