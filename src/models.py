@@ -23,6 +23,8 @@ class Product:
     height: Optional[int] = None
     format: Optional[str] = None
     created_at: Optional[datetime] = None
+    cloudinary_url: Optional[str] = None
+    local_image_path: Optional[str] = None
 
 
 class Database:

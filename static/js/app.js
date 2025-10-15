@@ -226,13 +226,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('div');
         card.className = 'result-card';
         
-        // Construct image URL - image_path is already relative to server root
-        const imagePath = product.image_path.replace(/\\/g, '/');
+        // Check if image_path is a full URL (Cloudinary) or local path
+        let imageUrl;
+        if (product.image_path.startsWith('http://') || product.image_path.startsWith('https://')) {
+            // Already a full URL (Cloudinary), use directly
+            imageUrl = product.image_path;
+        } else {
+            // Local path, prepend /products/
+            imageUrl = '/products/' + product.image_path.replace(/\\/g, '/');
+        }
         
         const similarityPercent = (product.similarity * 100).toFixed(1);
         
         card.innerHTML = `
-            <img src="/products/${imagePath}" alt="${product.name}" loading="lazy" onerror="this.src='/static/images/placeholder.png'">
+            <img src="${imageUrl}" alt="${product.name}" loading="lazy" onerror="this.src='/static/images/placeholder.png'">
             <div class="result-info">
                 <div class="result-name" title="${product.name}">${product.name}</div>
                 <div class="result-category">${product.category || 'Fashion'}</div>
