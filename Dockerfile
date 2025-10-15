@@ -36,4 +36,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 
 # Run with gunicorn for production
 # Use create_app callable pattern
-CMD exec gunicorn --config gunicorn_config_cloud.py "app:create_app()"
+CMD exec gunicorn --config deployment/gunicorn_config_cloud.py "app:create_app()"
