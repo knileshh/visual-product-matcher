@@ -43,7 +43,8 @@ setup(
         "numpy>=1.24.0",
         "SQLAlchemy>=2.0.0",
         "PyYAML>=6.0",
-        "cloudinary>=1.36.0",
+        "cloudinary>=1.36.0",  # Optional: Can be removed after GCS migration
+        "google-cloud-storage>=2.10.0",  # Google Cloud Storage for image hosting
         "gunicorn>=21.2.0",
     ],
     extras_require={

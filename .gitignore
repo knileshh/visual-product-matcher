@@ -66,3 +66,11 @@ fashion-images/
 *.db
 *.index
 *.npy
+
+# Google Cloud credentials
+gcs-credentials.json
+*-credentials.json
+service-account*.json
+*.json
+!package.json
+!tsconfig.json
