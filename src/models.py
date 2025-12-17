@@ -25,6 +25,7 @@ class Product:
     created_at: Optional[datetime] = None
     cloudinary_url: Optional[str] = None
     local_image_path: Optional[str] = None
+    gcs_url: Optional[str] = None
 
 
 class Database:
