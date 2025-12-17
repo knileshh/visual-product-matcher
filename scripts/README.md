@@ -2,6 +2,35 @@
 
 Utility scripts for development, testing, and maintenance.
 
+## 🆕 NEW: Image Migration to Google Cloud Storage
+
+### `migrate_to_gcs_quickstart.ps1` ⭐ **RECOMMENDED**
+Interactive PowerShell wizard for migrating to GCS.
+
+```powershell
+.\scripts\migrate_to_gcs_quickstart.ps1
+```
+
+- Checks prerequisites automatically
+- Guides through GCS bucket creation
+- Offers dry-run testing
+- Handles full migration process
+
+### `migrate_to_gcs.py`
+Python script for batch GCS uploads.
+
+```bash
+# Test without uploading
+python scripts/migrate_to_gcs.py --project-id YOUR_ID --bucket-name your-bucket --dry-run
+
+# Full migration
+python scripts/migrate_to_gcs.py --project-id YOUR_ID --bucket-name your-bucket --workers 20
+```
+
+**See:** `docs/GCS_MIGRATION_GUIDE.md` for complete documentation.
+
+---
+
 ## 🧪 Testing Scripts
 
 ### API Testing
