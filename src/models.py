@@ -47,6 +47,53 @@ class Database:
         db_dir = Path(self.db_path).parent
         db_dir.mkdir(parents=True, exist_ok=True)
     
+    def _migrate_schema(self) -> None:
+        """
+        Migrate database schema to add missing columns.
+        This ensures backward compatibility when the database was created
+        with an older schema.
+        """
+        # Columns that should exist (column_name, column_type)
+        required_columns = [
+            ('cloudinary_url', 'TEXT'),
+            ('local_image_path', 'TEXT'),
+            ('gcs_url', 'TEXT'),
+        ]
+        
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            
+            # Get existing columns
+            cursor.execute("PRAGMA table_info(products)")
+            existing_columns = {row[1] for row in cursor.fetchall()}
+            
+            # Add missing columns
+            for column_name, column_type in required_columns:
+                if column_name not in existing_columns:
+                    try:
+                        cursor.execute(f"""
+                            ALTER TABLE products ADD COLUMN {column_name} {column_type}
+                        """)
+                        logger.info(f"Added missing column: {column_name}")
+                    except sqlite3.OperationalError as e:
+                        # Column might already exist (race condition)
+                        logger.debug(f"Column {column_name} already exists or error: {e}")
+            
+            # Create indexes for URL columns
+            try:
+                cursor.execute("""
+                    CREATE INDEX IF NOT EXISTS idx_cloudinary_url 
+                    ON products(cloudinary_url)
+                """)
+                cursor.execute("""
+                    CREATE INDEX IF NOT EXISTS idx_gcs_url 
+                    ON products(gcs_url)
+                """)
+            except sqlite3.OperationalError:
+                pass  # Indexes might already exist
+            
+            conn.commit()
+    
     def _create_tables(self) -> None:
         """Create database tables if they don't exist."""
         with sqlite3.connect(self.db_path) as conn:
@@ -61,7 +108,10 @@ class Database:
                     width INTEGER,
                     height INTEGER,
                     format TEXT,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    cloudinary_url TEXT,
+                    local_image_path TEXT,
+                    gcs_url TEXT
                 )
             """)
             
@@ -73,6 +123,9 @@ class Database:
             
             conn.commit()
             logger.info("Database tables created successfully")
+            
+            # Run migrations to add any missing columns for existing databases
+            self._migrate_schema()
     
     def insert_product(self, product: Product) -> int:
         """
