@@ -168,14 +168,14 @@ def init_api(
             for product_id, similarity in results:
                 product = db.get_product_by_id(product_id)
                 if product:
-                    # Use Cloudinary URL if available, fallback to local path
-                    image_url = product.cloudinary_url if product.cloudinary_url else product.image_path
+                    # Use GCS URL if available, then cloudinary_url, finally fallback to local path
+                    image_url = product.gcs_url or product.cloudinary_url or product.image_path
                     
                     products.append({
                         'id': product.id,
                         'name': product.name,
                         'category': product.category,
-                        'image_path': image_url,  # Now contains Cloudinary URL
+                        'image_path': image_url,  # Contains GCS/cloud URL
                         'similarity': round(similarity, 4),
                         'width': product.width,
                         'height': product.height
@@ -295,14 +295,14 @@ def init_api(
             for product_id, similarity in results:
                 product = db.get_product_by_id(product_id)
                 if product:
-                    # Use Cloudinary URL if available, fallback to local path
-                    image_url = product.cloudinary_url if product.cloudinary_url else product.image_path
+                    # Use GCS URL if available, then cloudinary_url, finally fallback to local path
+                    image_url = product.gcs_url or product.cloudinary_url or product.image_path
                     
                     products.append({
                         'id': product.id,
                         'name': product.name,
                         'category': product.category,
-                        'image_path': image_url,  # Now contains Cloudinary URL
+                        'image_path': image_url,  # Contains GCS/cloud URL
                         'similarity': round(similarity, 4),
                         'width': product.width,
                         'height': product.height
@@ -342,14 +342,14 @@ def init_api(
                     'message': f'No product with ID {product_id}'
                 }), 404
             
-            # Use Cloudinary URL if available, fallback to local path
-            image_url = product.cloudinary_url if product.cloudinary_url else product.image_path
+            # Use GCS URL if available, then cloudinary_url, finally fallback to local path
+            image_url = product.gcs_url or product.cloudinary_url or product.image_path
             
             return jsonify({
                 'id': product.id,
                 'name': product.name,
                 'category': product.category,
-                'image_path': image_url,  # Now contains Cloudinary URL
+                'image_path': image_url,  # Contains GCS/cloud URL
                 'file_size': product.file_size,
                 'width': product.width,
                 'height': product.height,
