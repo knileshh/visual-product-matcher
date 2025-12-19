@@ -226,10 +226,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('div');
         card.className = 'result-card';
         
-        // Check if image_path is a full URL (Cloudinary) or local path
+        // Check if image_path is a full URL (GCS/cloud storage) or local path
         let imageUrl;
         if (product.image_path.startsWith('http://') || product.image_path.startsWith('https://')) {
-            // Already a full URL (Cloudinary), use directly
+            // Already a full URL (GCS/cloud storage), use directly
             imageUrl = product.image_path;
         } else {
             // Local path, prepend /products/
